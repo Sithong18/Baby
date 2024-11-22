@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love for You 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe4e1;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #e75480;
+            font-size: 2.5em;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        .option {
+            display: inline-block;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .option:hover {
+            background-color: #ff1493;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #6a0dad;
+        }
+        .game-over {
+            font-size: 1.5em;
+            color: #e75480;
+            margin-top: 30px;
+        }
+        #progressContainer {
+            margin-top: 20px;
+        }
+        #progressBar {
+            width: 100%;
+            height: 20px;
+        }
+        #namePrompt {
+            margin-top: 20px;
+        }
+        #finalMessage {
+            display: none;
+            font-size: 2em;
+            color: #ff1493;
+            margin-top: 50px;
+            animation: fadeIn 3s ease-in-out;
+        }
+        #heartAnimation {
+            display: none;
+            font-size: 5em;
+            color: red;
+            animation: heartPulse 2s infinite;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes heartPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            display: none;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Love for You 💖</h1>
+
+    <div id="namePrompt">
+        <label for="userName">Your Name: </label>
+        <input type="text" id="userName" placeholder="Enter your name" />
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="message" id="message" style="display: none;"></div>
+        <div id="progressContainer">
+            <progress id="progressBar" value="0" max="100"></progress>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver" style="display: none;">
+        **I promise I will love, care, and be there for you for the rest of my life!** 💌
+    </div>
+
+    <div id="heartAnimation">💖</div>
+
+    <div id="finalMessage">
+        <p>I love you more than anything in this world, and I want to spend my life with you. You are the only one I will ever love. 💓</p>
+    </div>
+
+    <audio id="loveSong" controls style="display: none;">
+        <source src="d:\test\My-friendly-website.htm" type="audio/mp3">
+    </audio>
+      
+
+    <script>
+        const levels = [
+            {
+                question: "Do you know how much I care about you?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I care so much about you. You're the most important person to me. 💖"
+            },
+            {
+                question: "Would I ever let anything happen to you?",
+                options: ["No", "Yes"],
+                answer: "No",
+                message: "I would protect you from anything and everything, because you're my world. 🌟"
+            },
+            {
+                question: "Do you know how much it hurts when we're apart?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "It breaks my heart every time we're not together. 💔"
+            },
+            {
+                question: "Would I ever leave you?",
+                options: ["No", "Yes"],
+                answer: "No",
+                message: "I will never leave you. My love for you is forever. 💓"
+            },
+            {
+                question: "Do you feel how much you mean to me every day?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "Every moment, my love for you grows stronger. You're always in my heart. 💕"
+            },
+            {
+                question: "When we talk, do you feel my love in every word?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "Every word I speak is filled with my deep love and admiration for you. 🥰"
+            },
+            {
+                question: "Do you know how deeply I worry when you're not around?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I'm constantly thinking about you and hoping you're safe and happy. ❤️"
+            },
+            {
+                question: "Do you feel my jealousy when others get close to you?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I can't help but feel protective of you. You're my treasure. 💎"
+            },
+            {
+                question: "Do you know how much my heart breaks when I see you sad?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "It hurts me to see you hurt, and I would do anything to make you smile. 😢"
+            },
+            {
+                question: "Do you understand that my love for you is endless?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "No matter what happens, my love will never fade. It will only grow stronger. 💖"
+            },
+            {
+                question: "Do you know that you complete me?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "Without you, I'm not whole. You make my life complete. ❤️"
+            },
+            {
+                question: "Do you feel safe and cherished when I'm around?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I will always be here to protect you, make you feel safe, and cherish you. 💖"
+            },
+            {
+                question: "Do you know that you're my forever love?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I want to spend the rest of my life with you, and never let you go. 💍"
+            },
+            {
+                question: "Do you realize that I will never find anyone like you?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "You are one of a kind, and there will never be anyone else like you. 💞"
+            },
+            {
+                question: "Do you know that I’m always thinking about our future together?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I can’t wait to build a future with you by my side. 🌈"
+            },
+            {
+                question: "Can you feel my heart racing when I'm with you?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "You make my heart race with excitement and love every time I'm near you. 💓"
+            },
+            {
+                question: "Do you know how much I crave your happiness?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "Your happiness is my top priority, and I'll do anything to make you smile. 🌸"
+            },
+            {
+                question: "Do you believe in us as much as I do?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I believe in us with all my heart, and I know our love is meant to be. 💖"
+            },
+            {
+                question: "Do you know that I’m willing to fight for our love?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I will fight for you and our love no matter what challenges we face. 💪"
+            },
+            {
+                question: "Can you see yourself growing old with me?",
+                options: ["Yes", "No"],
+                answer: "Yes",
+                message: "I want to grow old with you, side by side, sharing every moment of life. 💑"
+            }
+        ];
+
+        let currentLevel = 0;
+
+        function startGame() {
+            const userName = document.getElementById("userName").value;
+            if (userName) {
+                localStorage.setItem("userName", userName);
+                document.getElementById("namePrompt").style.display = "none";
+                document.getElementById("game-container").style.display = "block";
+                loadQuestion();
+            } else {
+                alert("Please enter your name.");
+            }
+        }
+
+        function loadQuestion() {
+            const level = levels[currentLevel];
+            document.getElementById("question").innerText = level.question;
+            document.getElementById("options").innerHTML = '';
+            level.options.forEach(option => {
+                let button = document.createElement("button");
+                button.classList.add("option");
+                button.innerText = option;
+                button.onclick = () => checkAnswer(option);
+                document.getElementById("options").appendChild(button);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selectedOption) {
+            const level = levels[currentLevel];
+            if (selectedOption === level.answer) {
+                document.getElementById("message").innerText = level.message.replace("you", localStorage.getItem("userName"));
+                document.getElementById("message").style.display = "block";
+                currentLevel++;
+                if (currentLevel < levels.length) {
+                    setTimeout(() => {
+                        document.getElementById("message").style.display = "none";
+                        loadQuestion();
+                    }, 7000);
+                } else {
+                    document.getElementById("options").style.display = "none";
+                    document.getElementById("question").style.display = "none";
+                    document.getElementById("gameOver").style.display = "none";
+                    document.getElementById("heartAnimation").style.display = "block";
+                    document.getElementById("finalMessage").style.display = "block";
+                    document.getElementById("loveSong").style.display = "block";
+                    document.getElementById("loveSong").play();
+                }
+            } else {
+                alert("Incorrect answer! Try again.");
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentLevel / levels.length) * 100;
+            document.getElementById("progressBar").value = progress;
+        }
+    </script>
+</body>
+</html>
